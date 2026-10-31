@@ -1,0 +1,14 @@
+{
+  "name": "@rutasur/analytics",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "replay": "node src/reprocesamiento.js",
+    "reprocesar": "node src/reprocesamiento.js"
+  },
+  "dependencies": {
+    "@rutasur/shared": "workspace:*"
+  }
+}
+
