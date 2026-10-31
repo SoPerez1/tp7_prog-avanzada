@@ -1,0 +1,28 @@
+{
+  "name": "rutasur",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "infra:up": "docker compose up -d --wait kafka mongo && docker compose run --rm kafka-init",
+    "infra:down": "docker compose down",
+    "infra:reset": "docker compose down -v",
+    "dev:simulator": "pnpm --filter @rutasur/simulator start",
+    "dev:projector": "pnpm --filter @rutasur/projector start",
+    "dev:notifications": "pnpm --filter @rutasur/notifications start",
+    "dev:rescheduling": "pnpm --filter @rutasur/rescheduling start",
+    "dev:sla": "pnpm --filter @rutasur/sla-monitor start",
+    "dev:analytics": "pnpm --filter @rutasur/analytics start",
+    "dev:web": "pnpm --filter @rutasur/web dev",
+    "validate": "node scripts/validar-criterios.js",
+    "test": "node scripts/validar-criterios.js",
+    "replay:indicador4": "pnpm --filter @rutasur/analytics replay",
+    "start": "pnpm infra:up && concurrently -k -n sim,proy,notif,reprog,sla,analitica,web -c blue,green,yellow,magenta,red,cyan,white \"pnpm dev:simulator\" \"pnpm dev:projector\" \"pnpm dev:notifications\" \"pnpm dev:rescheduling\" \"pnpm dev:sla\" \"pnpm dev:analytics\" \"pnpm dev:web\"",
+    "start:cu1": "pnpm infra:up && concurrently -k -n sim,proy -c blue,green \"pnpm dev:simulator\" \"pnpm dev:projector\"",
+    "start:cu2": "pnpm infra:up && concurrently -k -n sim,proy,notif,reprog,analitica -c blue,green,yellow,magenta,cyan \"pnpm dev:simulator\" \"pnpm dev:projector\" \"pnpm dev:notifications\" \"pnpm dev:rescheduling\" \"pnpm dev:analytics\"",
+    "lag": "pnpm --filter @rutasur/shared lag",
+    "reset:proyector": "pnpm --filter @rutasur/shared reset:proyector"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
